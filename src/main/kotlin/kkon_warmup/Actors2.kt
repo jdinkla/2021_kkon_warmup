@@ -1,7 +1,7 @@
 package kkon_warmup.actors2
 
 import kkon_warmup.actors2.Msg.Inc
-import kkon_warmup.actors2.Msg.Read
+import kkon_warmup.actors2.Msg.Get
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
@@ -9,7 +9,7 @@ import utilities.log
 
 sealed class Msg {
     object Inc : Msg()
-    class Read(val response: CompletableDeferred<Int>) : Msg()
+    class Get(val response: CompletableDeferred<Int>) : Msg()
 }
 
 @ObsoleteCoroutinesApi
@@ -19,14 +19,14 @@ fun CoroutineScope.counter(): SendChannel<Msg> = actor<Msg> {
         log("msg")
         when (msg) {
             is Inc -> counter++
-            is Read -> msg.response.complete(counter)
+            is Get -> msg.response.complete(counter)
         }
     }
 }
 
 suspend fun getCounterValue(actor: SendChannel<Msg>): Int {
     val num = CompletableDeferred<Int>()
-    actor.send(Read(num))
+    actor.send(Get(num))
     return num.await()
 }
 

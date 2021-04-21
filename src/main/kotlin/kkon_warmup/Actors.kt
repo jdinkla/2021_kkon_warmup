@@ -29,19 +29,17 @@ suspend fun getCounterValue(actor: SendChannel<Msg>): Int {
 }
 
 @ObsoleteCoroutinesApi
-fun main() = runBlocking<Unit> {
-    withContext(Dispatchers.Default) {
-        val counter = counter()
-        println("start: ${getCounterValue(counter)}")
-        (1..1_000_000).map {
-            launch {
-                counter.send(Inc)
-            }
-        }.map {
-            it.join()
+fun main() = runBlocking<Unit>(Dispatchers.Default) {
+    val counter = counter()
+    println("start: ${getCounterValue(counter)}")
+    (1..1_000_000).map {
+        launch {
+            counter.send(Inc)
         }
-        println("end: ${getCounterValue(counter)}")
-        counter.close()
+    }.map {
+        it.join()
     }
+    println("end: ${getCounterValue(counter)}")
+    counter.close()
 }
 

@@ -1,25 +1,25 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
-import java.net.URI
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
-val junitVersion = "5.7.1"
-val kotlinxCoroutinesVersion = "1.4.2"
-val ktorVersion = "1.5.1"
-val kotlinxHtmlVersion = "0.7.2"        // ktor needs it
+val junitVersion = "5.8.2"
+val kotlinxCoroutinesVersion = "1.6.1"
+val ktorVersion = "2.0.0"
+val kotlinxHtmlVersion = "0.7.5"        // ktor needs it
+val logbackVersion = "1.2.11"
 
 group = "dinkla"
 version = "1.0"
 
 plugins {
-    kotlin("jvm") version "1.4.32"
+    kotlin("jvm") version "1.6.20"
     application
 }
 
 repositories {
-    jcenter()
     maven {
         url = URI.create("https://kotlin.bintray.com/kotlinx")
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -29,7 +29,7 @@ dependencies {
     implementation("io.ktor:ktor-html-builder:$ktorVersion")
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-cio:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("ch.qos.logback:logback-classic:${logbackVersion}")
 
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
@@ -40,10 +40,6 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "11"
-}
-
-application {
-    mainClassName = "MainKt"
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"
 }

@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
 
 val junitVersion = "5.8.2"
-val kotlinxCoroutinesVersion = "1.6.1"
-val ktorVersion = "2.0.0"
+val kotlinxCoroutinesVersion = "1.6.2"
+val ktorVersion = "2.0.3"
 val kotlinxHtmlVersion = "0.7.5"        // ktor needs it
 val logbackVersion = "1.2.11"
 
@@ -26,7 +26,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:${kotlinxCoroutinesVersion}")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:${kotlinxHtmlVersion}")
-    implementation("io.ktor:ktor-html-builder:$ktorVersion")
+    implementation("io.ktor:ktor-server-html-builder:$ktorVersion")
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-server-cio:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:${logbackVersion}")
